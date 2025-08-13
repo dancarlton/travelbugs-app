@@ -37,20 +37,78 @@ pnpm lint         # eslint
 pnpm format       # prettier -w
 ```
 
-## Minimal Structure
+## Project Structure
 
 ```
-src/
-  components/
-  features/
-    explore/      # map + bottom sheet + proximity
-    stamp/        # stamp button + celebration
-  hooks/
-  lib/
-    supabase.ts
-    queryClient.ts
-  types/
-app/              # Expo Router or navigation root
+travelbugs-app/
+├─ app/                         # expo-router routes
+│  ├─ _layout.tsx               # providers + tabs
+│  ├─ (auth)/                   # unauthenticated stack
+│  │  ├─ _layout.tsx
+│  │  ├─ sign-in.tsx
+│  │  └─ onboarding.tsx
+│  ├─ (tabs)/                   # authenticated tabs
+│  │  ├─ _layout.tsx
+│  │  ├─ explore.tsx            # Map + bottom sheet
+│  │  ├─ quests.tsx             # MVP: “Zones” list (read-only)
+│  │  ├─ progress.tsx           # Stamps/Badges progress
+│  │  └─ profile.tsx
+│  ├─ landmark/[id].tsx         # Landmark detail + Stamp CTA
+│  └─ zone/[id].tsx             # Zone overview + Next-up
+│
+├─ src/
+│  ├─ app-providers/            # global providers
+│  │  ├─ QueryProvider.tsx
+│  │  ├─ SupabaseProvider.tsx
+│  │  └─ ThemeProvider.tsx
+│  ├─ features/
+│  │  ├─ auth/
+│  │  │  ├─ api.ts              # supabase auth calls
+│  │  │  ├─ hooks.ts            # useUser()
+│  │  │  └─ schema.ts           # zod for inputs
+│  │  ├─ landmarks/
+│  │  │  ├─ api.ts              # list landmarks, byId
+│  │  │  ├─ hooks.ts            # useLandmarksNearby(), useLandmark()
+│  │  │  ├─ model.ts            # TS types (from generated Supabase)
+│  │  │  └─ proximity.ts        # distance calc + thresholds
+│  │  ├─ stamps/
+│  │  │  ├─ api.ts              # create stamp
+│  │  │  └─ hooks.ts            # useStampMutation()
+│  │  ├─ badges/
+│  │  │  ├─ api.ts              # get badge progress
+│  │  │  └─ hooks.ts
+│  │  └─ zones/
+│  │     ├─ api.ts              # list zones, zone detail
+│  │     └─ hooks.ts
+│  ├─ components/
+│  │  ├─ map/ExploreMap.tsx     # MapView + markers + camera control
+│  │  ├─ sheets/LandmarkSheet.tsx
+│  │  ├─ ui/                     # design system (buttons, cards)
+│  │  │  ├─ Button.tsx
+│  │  │  ├─ Card.tsx
+│  │  │  └─ Icon.tsx
+│  │  ├─ feedback/Celebration.tsx # Lottie confetti + haptics
+│  │  └─ StampButton.tsx
+│  ├─ hooks/
+│  │  ├─ useLocationLive.ts     # foreground location + heading
+│  │  └─ useProximity.ts        # ties location -> active stampable landmark
+│  ├─ lib/
+│  │  ├─ supabase.ts            # supabase client
+│  │  ├─ queryKeys.ts           # react-query keys
+│  │  └─ haversine.ts           # distance utility
+│  ├─ state/
+│  │  └─ uiStore.ts             # lightweight UI state (if needed)
+│  ├─ styles/
+│  │  ├─ theme.ts
+│  │  └─ tokens.ts
+│  └─ types/
+│     ├─ supabase.generated.ts  # generated types
+│     └─ domain.ts              # shared domain-facing types
+│
+├─ .eslintrc.cjs
+├─ .prettierrc
+├─ tsconfig.json
+└─ package.json
 ```
 
 ## Build & OTA
