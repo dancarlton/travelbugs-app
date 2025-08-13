@@ -1,11 +1,16 @@
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import { Stack } from 'expo-router'
+import QueryProvider from '../src/app-providers/QueryProvider'
+import SupabaseProvider from '../src/app-providers/SupabaseProvider'
+import ThemeProvider from '../src/app-providers/ThemeProvider'
 
-export default function Layout() {
+export default function RootLayout() {
   return (
-    <>
-      <Stack screenOptions={{ headerShown: false }} />
-      <StatusBar style="auto" />
-    </>
-  );
+    <ThemeProvider>
+      <SupabaseProvider>
+        <QueryProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </QueryProvider>
+      </SupabaseProvider>
+    </ThemeProvider>
+  )
 }
