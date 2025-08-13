@@ -9,27 +9,27 @@
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		840D340D8D57BF0A77693EDC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4B461BCC028649B5D823A84C /* PrivacyInfo.xcprivacy */; };
+		66C804FEDE15D2EBC055B63F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6C73BA9BA2D0342AD1D408B3 /* PrivacyInfo.xcprivacy */; };
+		7FA6943CF4A3FD6B140DCFD8 /* libPods-TravelBugs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3419C8F96B0362D01CA1291 /* libPods-TravelBugs.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C2CC71A25B0096C37F112CFA /* libPods-TravelBugs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF5CD8C8E816C12D33AA6F7 /* libPods-TravelBugs.a */; };
-		DC6C359401861745E0F6DFEC /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB38979CB78211FF13C52E30 /* ExpoModulesProvider.swift */; };
+		D98A546A4011A0E5DA37F331 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04782F9C3050A5EDA88C551E /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0BF5CD8C8E816C12D33AA6F7 /* libPods-TravelBugs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TravelBugs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CBE203A2B59A19153B5BCD5 /* Pods-TravelBugs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelBugs.release.xcconfig"; path = "Target Support Files/Pods-TravelBugs/Pods-TravelBugs.release.xcconfig"; sourceTree = "<group>"; };
+		04782F9C3050A5EDA88C551E /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-TravelBugs/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TravelBugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelBugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TravelBugs/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TravelBugs/Info.plist; sourceTree = "<group>"; };
-		4B461BCC028649B5D823A84C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TravelBugs/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		42E8B7C3AF9B57A6F5E3A6EC /* Pods-TravelBugs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelBugs.debug.xcconfig"; path = "Target Support Files/Pods-TravelBugs/Pods-TravelBugs.debug.xcconfig"; sourceTree = "<group>"; };
+		6C73BA9BA2D0342AD1D408B3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TravelBugs/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		81DAE6CCF28296ED65F2E102 /* Pods-TravelBugs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelBugs.release.xcconfig"; path = "Target Support Files/Pods-TravelBugs/Pods-TravelBugs.release.xcconfig"; sourceTree = "<group>"; };
+		A3419C8F96B0362D01CA1291 /* libPods-TravelBugs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TravelBugs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = TravelBugs/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CB38979CB78211FF13C52E30 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-TravelBugs/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TravelBugs/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* TravelBugs-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TravelBugs-Bridging-Header.h"; path = "TravelBugs/TravelBugs-Bridging-Header.h"; sourceTree = "<group>"; };
-		F1259EE9796D1038C3D7F4B8 /* Pods-TravelBugs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TravelBugs.debug.xcconfig"; path = "Target Support Files/Pods-TravelBugs/Pods-TravelBugs.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2CC71A25B0096C37F112CFA /* libPods-TravelBugs.a in Frameworks */,
+				7FA6943CF4A3FD6B140DCFD8 /* libPods-TravelBugs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,24 +53,16 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				4B461BCC028649B5D823A84C /* PrivacyInfo.xcprivacy */,
+				6C73BA9BA2D0342AD1D408B3 /* PrivacyInfo.xcprivacy */,
 			);
 			name = TravelBugs;
-			sourceTree = "<group>";
-		};
-		15277B1587F48F7E78028793 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				981A6E6544299589F6EA84FC /* TravelBugs */,
-			);
-			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				0BF5CD8C8E816C12D33AA6F7 /* libPods-TravelBugs.a */,
+				A3419C8F96B0362D01CA1291 /* libPods-TravelBugs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -89,8 +81,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				E30EF3BED7303538C83E7C83 /* Pods */,
-				15277B1587F48F7E78028793 /* ExpoModulesProviders */,
+				FCB75A76135884874E9636A6 /* Pods */,
+				B7F2720B8EC13A77A45E0B5E /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -105,12 +97,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		981A6E6544299589F6EA84FC /* TravelBugs */ = {
+		92B28B508195E3D8E1BA786C /* TravelBugs */ = {
 			isa = PBXGroup;
 			children = (
-				CB38979CB78211FF13C52E30 /* ExpoModulesProvider.swift */,
+				04782F9C3050A5EDA88C551E /* ExpoModulesProvider.swift */,
 			);
 			name = TravelBugs;
+			sourceTree = "<group>";
+		};
+		B7F2720B8EC13A77A45E0B5E /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				92B28B508195E3D8E1BA786C /* TravelBugs */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -122,11 +122,11 @@
 			path = TravelBugs/Supporting;
 			sourceTree = "<group>";
 		};
-		E30EF3BED7303538C83E7C83 /* Pods */ = {
+		FCB75A76135884874E9636A6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F1259EE9796D1038C3D7F4B8 /* Pods-TravelBugs.debug.xcconfig */,
-				0CBE203A2B59A19153B5BCD5 /* Pods-TravelBugs.release.xcconfig */,
+				42E8B7C3AF9B57A6F5E3A6EC /* Pods-TravelBugs.debug.xcconfig */,
+				81DAE6CCF28296ED65F2E102 /* Pods-TravelBugs.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TravelBugs" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				DEB458864E27425C74B7D7DF /* [Expo] Configure project */,
+				FD5CE96C576C4F2ACBC77858 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				5911C914CC2883A537E372B3 /* [CP] Embed Pods Frameworks */,
+				5898FB76144825A0BF15B0C9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				840D340D8D57BF0A77693EDC /* PrivacyInfo.xcprivacy in Resources */,
+				66C804FEDE15D2EBC055B63F /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,13 +240,15 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5911C914CC2883A537E372B3 /* [CP] Embed Pods Frameworks */ = {
+		5898FB76144825A0BF15B0C9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TravelBugs/Pods-TravelBugs-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MapboxMaps/MapboxMaps.framework",
+				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCommon/MapboxCommon.framework/MapboxCommon",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxCoreMaps/MapboxCoreMaps.framework/MapboxCoreMaps",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework/MapboxMobileEvents",
@@ -254,6 +256,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMaps.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCommon.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreMaps.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
@@ -274,7 +278,6 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/MapboxMaps/MapboxMapsResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
@@ -292,7 +295,6 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MapboxMapsResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
@@ -310,7 +312,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TravelBugs/Pods-TravelBugs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DEB458864E27425C74B7D7DF /* [Expo] Configure project */ = {
+		FD5CE96C576C4F2ACBC77858 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -337,7 +339,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				DC6C359401861745E0F6DFEC /* ExpoModulesProvider.swift in Sources */,
+				D98A546A4011A0E5DA37F331 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +348,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1259EE9796D1038C3D7F4B8 /* Pods-TravelBugs.debug.xcconfig */;
+			baseConfigurationReference = 42E8B7C3AF9B57A6F5E3A6EC /* Pods-TravelBugs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -382,7 +384,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0CBE203A2B59A19153B5BCD5 /* Pods-TravelBugs.release.xcconfig */;
+			baseConfigurationReference = 81DAE6CCF28296ED65F2E102 /* Pods-TravelBugs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

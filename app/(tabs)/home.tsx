@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   View,
   Text,
@@ -8,42 +8,42 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useRouter } from 'expo-router'
 
-import SectionHeader from "../../src/components/SectionHeader";
-import CategoryTag from "../../src/components/CategoryTag";
-import NearbyCard from "../../src/components/NearbyCard";
-import NeighborhoodProgressCard from "../../src/components/NeighborhoodProgressCard";
+import SectionHeader from '../../src/components/SectionHeader'
+import CategoryTag from '../../src/components/CategoryTag'
+import NearbyCard from '../../src/components/NearbyCard'
+import NeighborhoodProgressCard from '../../src/components/NeighborhoodProgressCard'
 
-import { useLandmarksNearby } from "../../src/hooks/useLandmarksNearby";
-import { useNeighborhoodProgress } from "../../src/hooks/useNeighborhoodProgress";
-import { useLocationLive } from "../../src/hooks/useLocationLive";
-import { useCityFromLocation } from "../../src/hooks/useCityFromLocation";
-import { distanceMeters, formatFeet } from "../../src/utils/haversine";
+import { useLandmarksNearby } from '../../src/hooks/useLandmarksNearby'
+import { useNeighborhoodProgress } from '../../src/hooks/useNeighborhoodProgress'
+import { useLocationLive } from '../../src/hooks/useLocationLive'
+import { useCityFromLocation } from '../../src/hooks/useCityFromLocation'
+import { distanceMeters, formatFeet } from '../../src/utils/haversine'
 
-const CATEGORY_TAGS = ["Monuments", "Lakes", "Parks", "Street Art", "Museums"];
+const CATEGORY_TAGS = ['Monuments', 'Lakes', 'Parks', 'Street Art', 'Museums']
 
 export default function HomeScreen() {
-  const router = useRouter();
+  const router = useRouter()
 
   // location + reverse geocode
-  const { coords } = useLocationLive();
-  const here = coords ? { lat: coords.latitude, lon: coords.longitude } : null;
+  const { coords } = useLocationLive()
+  const here = coords ? { lat: coords.latitude, lon: coords.longitude } : null
   const { label: cityLabel, loading: cityLoading } = useCityFromLocation(
     coords ? { latitude: coords.latitude, longitude: coords.longitude } : null
-  );
+  )
 
   // data (mock for now)
-  const { data: nearby = [] } = useLandmarksNearby();
-  const { data: neighborhoods = [] } = useNeighborhoodProgress("dev-user");
+  const { data: nearby = [] } = useLandmarksNearby()
+  const { data: neighborhoods = [] } = useNeighborhoodProgress('dev-user')
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }} edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }} edges={['top']}>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.select({ ios: "padding", android: undefined })}
+        behavior={Platform.select({ ios: 'padding', android: undefined })}
       >
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -56,23 +56,23 @@ export default function HomeScreen() {
           {/* Top bar */}
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               marginBottom: 14,
             }}
           >
             <View>
               <Text style={{ fontSize: 12, opacity: 0.6 }}>Location</Text>
               <Pressable onPress={() => {}}>
-                <Text style={{ fontSize: 18, fontWeight: "800" }}>
-                  {cityLoading ? "Locating…" : cityLabel || "Unknown"}
-                  {!cityLoading && cityLabel ? " ▼" : ""}
+                <Text style={{ fontSize: 18, fontWeight: '800' }}>
+                  {cityLoading ? 'Locating…' : cityLabel || 'Unknown'}
+                  {!cityLoading && cityLabel ? ' ▼' : ''}
                 </Text>
               </Pressable>
             </View>
 
-            <Pressable onPress={() => router.push("/(tabs)/profile")}>
+            <Pressable onPress={() => router.push('/(tabs)/profile')}>
               <Text style={{ fontSize: 22 }}>🔔</Text>
             </Pressable>
           </View>
@@ -80,8 +80,8 @@ export default function HomeScreen() {
           {/* Search + Filter */}
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
+              flexDirection: 'row',
+              alignItems: 'center',
               gap: 10,
               marginBottom: 18,
             }}
@@ -89,16 +89,16 @@ export default function HomeScreen() {
             <View
               style={{
                 flex: 1,
-                backgroundColor: "#F2F2F7",
+                backgroundColor: '#F2F2F7',
                 borderRadius: 14,
                 paddingHorizontal: 14,
                 height: 48,
-                justifyContent: "center",
+                justifyContent: 'center',
               }}
             >
               <TextInput
-                placeholder="Search landmarks"
-                returnKeyType="search"
+                placeholder='Search landmarks'
+                returnKeyType='search'
                 style={{
                   fontSize: 16,
                 }}
@@ -111,19 +111,19 @@ export default function HomeScreen() {
                 width: 48,
                 height: 48,
                 borderRadius: 14,
-                backgroundColor: "#1fb0a6",
-                alignItems: "center",
-                justifyContent: "center",
+                backgroundColor: '#1fb0a6',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <Text style={{ color: "white", fontWeight: "800", fontSize: 18 }}>
+              <Text style={{ color: 'white', fontWeight: '800', fontSize: 18 }}>
                 ≡
               </Text>
             </Pressable>
           </View>
 
           {/* Categories */}
-          <SectionHeader title="Categories" onSeeAll={() => {}} />
+          <SectionHeader title='Categories' onSeeAll={() => {}} />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -131,19 +131,24 @@ export default function HomeScreen() {
             style={{ marginBottom: 16 }}
           >
             {CATEGORY_TAGS.map((c, i) => (
-              <CategoryTag key={c} label={c} selected={i === 0} onPress={() => {}} />
+              <CategoryTag
+                key={c}
+                label={c}
+                selected={i === 0}
+                onPress={() => {}}
+              />
             ))}
           </ScrollView>
 
           {/* Nearby Landmarks */}
           <SectionHeader
-            title="Nearby Landmarks"
-            onSeeAll={() => router.push("/(tabs)/explore")}
+            title='Nearby'
+            onSeeAll={() => router.push('/(tabs)/explore')}
           />
           <FlatList
             horizontal
             data={nearby}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingVertical: 8, paddingRight: 4 }}
             style={{ marginBottom: 18 }}
@@ -153,9 +158,9 @@ export default function HomeScreen() {
                   ? formatFeet(
                       distanceMeters(here, { lat: item.lat, lon: item.lon })
                     )
-                  : "—";
+                  : '—'
               return (
-                <Pressable onPress={() => router.push("/(tabs)/explore")}>
+                <Pressable onPress={() => router.push('/(tabs)/explore')}>
                   <NearbyCard
                     title={item.title}
                     subtitle={item.subtitle}
@@ -163,26 +168,26 @@ export default function HomeScreen() {
                     imageUrl={item.imageUrl}
                   />
                 </Pressable>
-              );
+              )
             }}
           />
 
-          {/* In‑Progress */}
-          <SectionHeader title="In‑Progress" />
+          {/* Progress */}
+          <SectionHeader title='Progress' />
           <View style={{ marginTop: 6 }}>
-            {neighborhoods.map((n) => (
+            {neighborhoods.map(n => (
               <NeighborhoodProgressCard
                 key={n.id}
                 name={n.name}
                 city={n.city}
                 completed={n.completed}
                 total={n.total}
-                onPress={() => router.push("/(tabs)/explore")}
+                onPress={() => router.push('/(tabs)/explore')}
               />
             ))}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
-  );
+  )
 }
