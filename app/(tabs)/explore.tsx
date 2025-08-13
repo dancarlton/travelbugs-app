@@ -1,17 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  ActivityIndicator,
-  Platform,
-} from 'react-native'
-import MapboxGL from '@rnmapbox/maps'
-import * as Location from 'expo-location'
-import Constants from 'expo-constants'
-import { Ionicons } from '@expo/vector-icons'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
+<<<<<<< HEAD
 // ────────────────────────────────────────────────────────────────────────────────
 // Mapbox setup
 // ────────────────────────────────────────────────────────────────────────────────
@@ -193,10 +183,17 @@ export default function ExploreScreen() {
           <ActivityIndicator />
         </View>
       )}
+=======
+export default function ExploreScreen() {
+  return (
+    <View style={styles.container}>
+      <Text>Explore (placeholder)</Text>
+>>>>>>> 78df592 (Set up Mapbox token via app.config.ts and env, clean Explore placeholder)
     </View>
   )
 }
 
+<<<<<<< HEAD
 // ────────────────────────────────────────────────────────────────────────────────
 // Styles
 // ────────────────────────────────────────────────────────────────────────────────
@@ -259,4 +256,8 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
   },
+=======
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+>>>>>>> 78df592 (Set up Mapbox token via app.config.ts and env, clean Explore placeholder)
 })
