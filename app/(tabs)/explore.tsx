@@ -1,20 +1,23 @@
 // app/(tabs)/explore.tsx
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View, Pressable, Text } from 'react-native'
 import MapboxGL from '@rnmapbox/maps'
 import * as Location from 'expo-location'
 
 const STYLE_URL = 'mapbox://styles/dancarlton/cmeai6l5z005z01sn8l0h87et'
+const FOLLOW_ZOOM = 17.5
+const FOLLOW_PITCH = 65
+const FLYOVER_DURATION = 2500 // ms
 
 export default function ExploreScreen() {
   const [hasPerm, setHasPerm] = useState<boolean | null>(null)
-  const [hasFix, setHasFix] = useState(false)
-  const [following, setFollowing] = useState(false) // start false; enable after first fix
-  const [lastCoord, setLastCoord] = useState<[number, number] | null>(null) // [lng, lat]
+  const [firstFix, setFirstFix] = useState<[number, number] | null>(null)
+  const [following, setFollowing] = useState(false) // start NOT following
+  const [lastCoord, setLastCoord] = useState<[number, number] | null>(null)
 
-  const FOLLOW_ZOOM = 17.5
-  const FOLLOW_PITCH = 65
+  const cameraRef = useRef<MapboxGL.Camera>(null)
 
+  // Request location permissions
   useEffect(() => {
     ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
@@ -22,12 +25,24 @@ export default function ExploreScreen() {
     })()
   }, [])
 
-  // when we get the first fix, flip both flags once
+  // When we get first GPS fix, fly to it and then start following
   useEffect(() => {
-    if (hasFix && !following) setFollowing(true)
-  }, [hasFix, following])
+    if (firstFix && cameraRef.current) {
+      cameraRef.current.setCamera({
+        centerCoordinate: firstFix,
+        zoomLevel: FOLLOW_ZOOM,
+        pitch: FOLLOW_PITCH,
+        animationMode: 'flyTo',
+        animationDuration: FLYOVER_DURATION,
+      })
 
-  if (hasPerm === null) return null
+      // enable follow slightly after the flyTo completes
+      const t = setTimeout(() => setFollowing(true), FLYOVER_DURATION + 100)
+      return () => clearTimeout(t)
+    }
+  }, [firstFix])
+
+  if (hasPerm === null) return null // still deciding on permissions
 
   return (
     <View style={styles.container}>
@@ -41,58 +56,53 @@ export default function ExploreScreen() {
         rotateEnabled
         zoomEnabled
         attributionPosition={{ bottom: 12, right: 12 }}
-        // Any touch on the map = user interaction → stop following
-        onTouchStart={() => following && setFollowing(false)}
-        // Keep a copy of where the camera is, for non-follow view
         onCameraChanged={(e: any) => {
-          const cc = e?.properties?.centerCoordinate
-          if (Array.isArray(cc) && cc.length === 2) setLastCoord([cc[0], cc[1]])
+          const byGesture =
+            e?.properties?.isUserInteraction ||
+            e?.properties?.gesture ||
+            e?.properties?.manual
+          if (byGesture && following) setFollowing(false)
+
+          // keep the view pitched while following
+          const pitchNow = e?.properties?.pitch ?? 0
+          if (following && pitchNow < FOLLOW_PITCH - 1 && cameraRef.current) {
+            cameraRef.current.setCamera({
+              pitch: FOLLOW_PITCH,
+              animationDuration: 0,
+            })
+          }
         }}
       >
-        {/* Only mount a camera once we have a GPS fix, to avoid the initial world→jump */}
-        {hasFix && (following ? (
-          <MapboxGL.Camera
-            followUserLocation
-            followUserMode="course"           // rotate with movement direction
-            followZoomLevel={FOLLOW_ZOOM}
-            followPitch={FOLLOW_PITCH}
-            animationMode="flyTo"
-            animationDuration={600}
-          />
-        ) : (
-          lastCoord && (
-            <MapboxGL.Camera
-              centerCoordinate={lastCoord}
-              zoomLevel={FOLLOW_ZOOM}
-              pitch={FOLLOW_PITCH}
-              animationMode="easeTo"
-              animationDuration={300}
-            />
-          )
-        ))}
-
-        {/* New puck API: bearing follows heading, no deprecated props */}
-        <MapboxGL.LocationPuck
-          type="puck2D"
-          puckBearingEnabled
-          puckBearing="heading"
-          pulsing={{ isEnabled: false }}
+        <MapboxGL.Camera
+          ref={cameraRef}
+          defaultSettings={{
+            centerCoordinate: [0, 0],
+            zoomLevel: 0,
+            pitch: 0,
+          }}
+          followUserLocation={following}
+          followUserMode="course"
+          followZoomLevel={FOLLOW_ZOOM}
+          followPitch={FOLLOW_PITCH}
+          padding={{ top: 20, bottom: 120, left: 0, right: 0 }}
         />
 
-        {/* Update our last known coord + mark that we have a fix */}
         <MapboxGL.UserLocation
           visible
-          renderMode="native"
+          puckBearingEnabled
+          puckBearing="heading"
           onUpdate={(pos) => {
-            const { longitude, latitude } = pos.coords
-            setLastCoord([longitude, latitude])
-            if (!hasFix) setHasFix(true)
+            const coord: [number, number] = [
+              pos.coords.longitude,
+              pos.coords.latitude,
+            ]
+            setLastCoord(coord)
+            if (!firstFix) setFirstFix(coord)
           }}
         />
       </MapboxGL.MapView>
 
-      {/* Recenter button when user has panned/zoomed away */}
-      {hasFix && !following && (
+      {firstFix && !following && (
         <Pressable style={styles.fab} onPress={() => setFollowing(true)}>
           <Text style={styles.fabLabel}>Recenter</Text>
         </Pressable>
