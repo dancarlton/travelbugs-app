@@ -41,74 +41,48 @@ pnpm format       # prettier -w
 
 ```
 travelbugs-app/
-├─ app/                         # expo-router routes
-│  ├─ _layout.tsx               # providers + tabs
-│  ├─ (auth)/                   # unauthenticated stack
-│  │  ├─ _layout.tsx
-│  │  ├─ sign-in.tsx
-│  │  └─ onboarding.tsx
-│  ├─ (tabs)/                   # authenticated tabs
-│  │  ├─ _layout.tsx
-│  │  ├─ explore.tsx            # Map + bottom sheet
-│  │  ├─ quests.tsx             # MVP: “Zones” list (read-only)
-│  │  ├─ progress.tsx           # Stamps/Badges progress
-│  │  └─ profile.tsx
-│  ├─ landmark/[id].tsx         # Landmark detail + Stamp CTA
-│  └─ zone/[id].tsx             # Zone overview + Next-up
-│
-├─ src/
-│  ├─ app-providers/            # global providers
-│  │  ├─ QueryProvider.tsx
-│  │  ├─ SupabaseProvider.tsx
-│  │  └─ ThemeProvider.tsx
-│  ├─ features/
-│  │  ├─ auth/
-│  │  │  ├─ api.ts              # supabase auth calls
-│  │  │  ├─ hooks.ts            # useUser()
-│  │  │  └─ schema.ts           # zod for inputs
-│  │  ├─ landmarks/
-│  │  │  ├─ api.ts              # list landmarks, byId
-│  │  │  ├─ hooks.ts            # useLandmarksNearby(), useLandmark()
-│  │  │  ├─ model.ts            # TS types (from generated Supabase)
-│  │  │  └─ proximity.ts        # distance calc + thresholds
-│  │  ├─ stamps/
-│  │  │  ├─ api.ts              # create stamp
-│  │  │  └─ hooks.ts            # useStampMutation()
-│  │  ├─ badges/
-│  │  │  ├─ api.ts              # get badge progress
-│  │  │  └─ hooks.ts
-│  │  └─ zones/
-│  │     ├─ api.ts              # list zones, zone detail
-│  │     └─ hooks.ts
-│  ├─ components/
-│  │  ├─ map/ExploreMap.tsx     # MapView + markers + camera control
-│  │  ├─ sheets/LandmarkSheet.tsx
-│  │  ├─ ui/                     # design system (buttons, cards)
-│  │  │  ├─ Button.tsx
-│  │  │  ├─ Card.tsx
-│  │  │  └─ Icon.tsx
-│  │  ├─ feedback/Celebration.tsx # Lottie confetti + haptics
-│  │  └─ StampButton.tsx
-│  ├─ hooks/
-│  │  ├─ useLocationLive.ts     # foreground location + heading
-│  │  └─ useProximity.ts        # ties location -> active stampable landmark
-│  ├─ lib/
-│  │  ├─ supabase.ts            # supabase client
-│  │  ├─ queryKeys.ts           # react-query keys
-│  │  └─ haversine.ts           # distance utility
-│  ├─ state/
-│  │  └─ uiStore.ts             # lightweight UI state (if needed)
-│  ├─ styles/
-│  │  ├─ theme.ts
-│  │  └─ tokens.ts
-│  └─ types/
-│     ├─ supabase.generated.ts  # generated types
-│     └─ domain.ts              # shared domain-facing types
-│
-├─ .eslintrc.cjs
-├─ .prettierrc
-├─ tsconfig.json
-└─ package.json
+app/                         # Expo Router only (tiny wrappers)
+  (auth)/
+    sign-in.tsx              # imports from src/features/auth
+  (tabs)/
+    _layout.tsx
+    explore.tsx              # imports from src/features/explore
+    badges.tsx               # imports from src/features/badges (future)
+    profile.tsx              # imports from src/features/profile
+src/
+  features/
+    explore/
+      components/
+      hooks/
+      lib/                   # helpers for this feature
+      screens/
+        ExploreScreen.tsx    # your current explore screen (moved)
+      types.ts
+      index.ts               # barrel (re-exports ExploreScreen)
+    auth/
+      screens/
+        SignInScreen.tsx
+      hooks/
+      lib/
+      index.ts
+    profile/
+      screens/
+        ProfileScreen.tsx
+      index.ts
+    pois/                    # new feature we’ll use next
+      data/                  # mock JSON/TS for local POIs
+      components/
+      hooks/
+      lib/
+      screens/
+        PoiDebugScreen.tsx   # optional, for testing
+      index.ts
+  components/                # truly shared, cross-feature UI
+  hooks/                     # cross-feature hooks
+  lib/                       # cross-feature utilities (api, supabase, etc.)
+  assets/                    # images, Lottie, etc. (if not using /assets at root)
+  styles/                    # theme/tokens if you want
+  utils/                     # misc helpers (or merge into lib/)
 ```
 
 ## Build & OTA
