@@ -1,5 +1,5 @@
 import { Tabs, Redirect } from 'expo-router'
-import { useUser } from '../../src/features/auth/hooks'
+import { useUser } from '@/features/auth/hooks'
 import { Ionicons } from '@expo/vector-icons'
 
 export default function TabsLayout() {
