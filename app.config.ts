@@ -1,6 +1,6 @@
 // app.config.ts
-import 'dotenv/config';
-import type { ExpoConfig } from '@expo/config';
+import 'dotenv/config'
+import type { ExpoConfig } from '@expo/config'
 
 const config = ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   ...config,
@@ -50,7 +50,9 @@ const config = ({ config }: { config: ExpoConfig }): ExpoConfig => ({
   extra: {
     ...(config.extra ?? {}),
     MAPBOX_TOKEN: process.env.EXPO_PUBLIC_MAPBOX_TOKEN, // <-- comes from .env
+    supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
+    supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
   },
-});
+})
 
-export default config;
+export default config

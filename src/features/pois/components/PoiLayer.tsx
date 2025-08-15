@@ -3,15 +3,27 @@ import React, { useMemo } from 'react'
 import MapboxGL from '@rnmapbox/maps'
 import type { Poi } from '../types'
 
-type Props = {
-  pois?: Poi[]
-  selectedId?: string | null
-  onSelect?: (p: Poi | null) => void
+type AnyPoi = Poi & {
+  // allow either "coordinates" or lat/lon
+  coordinates?: [number, number]
 }
 
-// keep this path EXACTLY where your png lives: /assets/poi/poi-pin.png
+type Props = {
+  pois?: AnyPoi[]
+  selectedId?: string | null
+  onSelect?: (p: AnyPoi | null) => void
+}
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PIN = require('../../../assets/poi/marker.png')
+
+const toLngLat = (p: AnyPoi): [number, number] => {
+  if (Array.isArray(p.coordinates) && p.coordinates.length === 2) {
+    return p.coordinates as [number, number] // [lng, lat]
+  }
+  // fallback to fields from Supabase
+  return [Number(p.longitude), Number(p.latitude)]
+}
 
 const PoiLayer: React.FC<Props> = ({
   pois = [],
@@ -21,48 +33,70 @@ const PoiLayer: React.FC<Props> = ({
   const fc = useMemo(
     () => ({
       type: 'FeatureCollection' as const,
-      features: pois.map(p => ({
-        type: 'Feature' as const,
-        id: p.id,
-        geometry: { type: 'Point' as const, coordinates: p.coordinates },
-        properties: { ...p, isSelected: p.id === selectedId },
-      })),
+      features: pois
+        .filter(
+          p =>
+            p && (p.coordinates || (p.longitude != null && p.latitude != null))
+        )
+        .map(p => ({
+          type: 'Feature' as const,
+          id: String(p.id),
+          geometry: { type: 'Point' as const, coordinates: toLngLat(p) },
+          // Keep properties JSON-safe; avoid functions/objects like Date
+          properties: {
+            id: String(p.id),
+            name: p.name,
+            category: p.category ?? null,
+            latitude: Number(p.latitude),
+            longitude: Number(p.longitude),
+            image_url: p.image_url ?? null,
+            isSelected: String(p.id) === String(selectedId),
+          },
+        })),
     }),
     [pois, selectedId]
   )
 
   const handlePress = (e: any) => {
-    const poi = e?.features?.[0]?.properties as Poi | undefined
-    onSelect?.(poi ?? null)
+    const props = e?.features?.[0]?.properties
+    if (!props) return onSelect?.(null)
+    // Rehydrate a POI-ish object from properties
+    onSelect?.({
+      id: props.id,
+      name: props.name,
+      category: props.category,
+      latitude: Number(props.latitude),
+      longitude: Number(props.longitude),
+      image_url: props.image_url,
+      coordinates: [Number(props.longitude), Number(props.latitude)],
+    } as AnyPoi)
   }
 
   return (
     <>
-      {/* Register the bitmap once */}
       <MapboxGL.Images images={{ pin: PIN }} />
-
-      {/* Unique, stable ids to avoid “existing source” warnings */}
       <MapboxGL.ShapeSource id='pois-src' shape={fc} onPress={handlePress}>
         <MapboxGL.SymbolLayer
           id='pois-sym'
           style={{
             iconImage: 'pin',
-            // Bigger when selected, smaller otherwise
             iconSize: [
               'interpolate',
               ['linear'],
               ['zoom'],
               0,
-              0.2, // zoom level 0 → tiny
+              0.2,
               13,
-              0.5, // mid zoom
+              0.5,
               19,
-              1.0, // close up
+              1.0,
               20,
-              2.0, // max zoom → double size
+              2.0,
             ],
             iconAllowOverlap: true,
             iconIgnorePlacement: true,
+            iconAnchor: 'bottom',
+            iconOffset: [0, -2],
           }}
         />
       </MapboxGL.ShapeSource>

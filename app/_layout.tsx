@@ -5,10 +5,10 @@ import ThemeProvider from '../src/app-providers/ThemeProvider';
 import MapboxGL from '@rnmapbox/maps';
 import Constants from 'expo-constants';
 
-console.log(
-  'MAPBOX TOKEN (last 6 chars):',
-  (Constants.expoConfig?.extra?.MAPBOX_TOKEN as string)?.slice(-6)
-);
+// console.log(
+//   'MAPBOX TOKEN (last 6 chars):',
+//   (Constants.expoConfig?.extra?.MAPBOX_TOKEN as string)?.slice(-6)
+// );
 
 const token = (Constants.expoConfig?.extra as any)?.MAPBOX_TOKEN as string | undefined;
 MapboxGL.setAccessToken(token ?? '');

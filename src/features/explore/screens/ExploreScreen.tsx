@@ -1,11 +1,12 @@
-// app/(tabs)/explore.tsx
+// src/features/explore/screens/ExploreScreen.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import * as Location from 'expo-location';
 
-// POIs feature
-import { PoiLayer, POIS, useSelectedPoi } from '@/features/pois';
+import { usePois } from '../../pois/hooks/usePois';
+import type { Poi } from '../../pois/types';
+import PoiLayer from '../../pois/components/PoiLayer';
 
 const STYLE_URL = 'mapbox://styles/dancarlton/cmeai6l5z005z01sn8l0h87et';
 const FOLLOW_ZOOM = 17.5;
@@ -14,12 +15,12 @@ const FLY_MS = 2200;
 
 export default function ExploreScreen() {
   const [hasPerm, setHasPerm] = useState<boolean | null>(null);
-  const [firstFix, setFirstFix] = useState<[number, number] | null>(null);
+  const [firstFix, setFirstFix] = useState<[number, number] | null>(null); // [lng, lat]
   const [following, setFollowing] = useState(false);
-  const [lastCoord, setLastCoord] = useState<[number, number] | null>(null);
+  const [selected, setSelected] = useState<Poi | null>(null);
   const cameraRef = useRef<MapboxGL.Camera>(null);
 
-  const { selected, select } = useSelectedPoi();
+  const { data: pois = [] } = usePois();
 
   useEffect(() => {
     (async () => {
@@ -28,7 +29,6 @@ export default function ExploreScreen() {
     })();
   }, []);
 
-  // Fly from globe → first GPS fix, then begin following
   useEffect(() => {
     if (firstFix && cameraRef.current) {
       cameraRef.current.setCamera({
@@ -64,15 +64,10 @@ export default function ExploreScreen() {
             e?.properties?.manual;
           if (byGesture && following) setFollowing(false);
 
-          // keep the view pitched while following
           const pitchNow = e?.properties?.pitch ?? 0;
           if (following && pitchNow < FOLLOW_PITCH - 1 && cameraRef.current) {
             cameraRef.current.setCamera({ pitch: FOLLOW_PITCH, animationDuration: 0 });
           }
-        }}
-        onPress={(event) => {
-          const coords = event.geometry.coordinates; // [lng, lat]
-          console.log('📍 Tap coords (lng, lat):', coords);
         }}
       >
         <MapboxGL.Camera
@@ -91,43 +86,35 @@ export default function ExploreScreen() {
           puckBearing="heading"
           onUpdate={(pos) => {
             const coord: [number, number] = [pos.coords.longitude, pos.coords.latitude];
-            setLastCoord(coord);
             if (!firstFix) setFirstFix(coord);
           }}
         />
 
-        {/* ONE PoiLayer only */}
         <PoiLayer
-          pois={POIS}
+          pois={pois}
           selectedId={selected?.id ?? null}
-          onSelect={select}
+          onSelect={setSelected}
         />
       </MapboxGL.MapView>
-
-      {selected && (
-        <View style={styles.sheet}>
-          <Text style={styles.sheetTitle}>{selected.name}</Text>
-          <View style={{ flexDirection: 'row', gap: 12 }}>
-            <Pressable style={styles.ctaSecondary} onPress={() => select(null)}>
-              <Text style={styles.ctaSecondaryLabel}>Close</Text>
-            </Pressable>
-            <Pressable
-              style={styles.ctaPrimary}
-              onPress={() => {
-                // TODO: navigate to quest flow/details
-                console.log('Start quest for', selected.id);
-              }}
-            >
-              <Text style={styles.ctaPrimaryLabel}>Start quest</Text>
-            </Pressable>
-          </View>
-        </View>
-      )}
 
       {firstFix && !following && (
         <Pressable style={styles.fab} onPress={() => setFollowing(true)}>
           <Text style={styles.fabLabel}>Recenter</Text>
         </Pressable>
+      )}
+
+      {selected && (
+        <View style={styles.sheet}>
+          <Text style={styles.sheetTitle}>{selected.name}</Text>
+          <View style={{ flexDirection: 'row', gap: 12 }}>
+            <Pressable style={styles.ctaSecondary} onPress={() => setSelected(null)}>
+              <Text style={styles.ctaSecondaryLabel}>Close</Text>
+            </Pressable>
+            <Pressable style={styles.ctaPrimary} onPress={() => { /* TODO: stamp flow */ }}>
+              <Text style={styles.ctaPrimaryLabel}>Go</Text>
+            </Pressable>
+          </View>
+        </View>
       )}
     </View>
   );
