@@ -1,10 +1,18 @@
 // src/features/explore/screens/ExploreScreen.tsx
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { StyleSheet, View, Pressable, Text, Image, Linking, Platform } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  Text,
+  Image,
+  Linking,
+  Platform,
+} from 'react-native'
 import MapboxGL from '@rnmapbox/maps'
 import * as Location from 'expo-location'
 import { usePois } from '../../pois/hooks/usePois'
-import type { Poi } from '../../pois/types'
+import type { Poi, PoiPreview } from '../../pois/types'
 import PoiLayer from '../../pois/components/PoiLayer'
 import { distanceMeters, formatFeet } from '@/utils/haversine'
 import { poiToGeo } from '@/utils/geo'
@@ -22,7 +30,18 @@ export default function ExploreScreen() {
   const [selected, setSelected] = useState<Poi | null>(null)
   const cameraRef = useRef<MapboxGL.Camera>(null)
 
-  const { data: pois = [] } = usePois()
+  const { data: rawPois = [] } = usePois()
+
+  const pois: Poi[] = rawPois.map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    latitude: p.latitude,
+    longitude: p.longitude,
+    category: p.category,
+    image_url: p.image_url,
+    city: p.city ?? null, // ✅ safely fallback to null
+    neighborhood: p.neighborhood ?? null,
+  }))
 
   useEffect(() => {
     ;(async () => {
@@ -57,10 +76,11 @@ export default function ExploreScreen() {
     const q = encodeURIComponent(name ?? 'Destination')
     const apple = `http://maps.apple.com/?ll=${latitude},${longitude}&q=${q}`
     const google = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`
-    Linking.openURL(Platform.select({ ios: apple, android: google, default: google })!)
+    Linking.openURL(
+      Platform.select({ ios: apple, android: google, default: google })!
+    )
   }
 
-  // ⬇️ DO NOT return early — always render the root, then branch inside.
   return (
     <View style={styles.container}>
       {hasPerm ? (
@@ -83,27 +103,37 @@ export default function ExploreScreen() {
               if (byGesture && following) setFollowing(false)
 
               const pitchNow = e?.properties?.pitch ?? 0
-              if (following && pitchNow < FOLLOW_PITCH - 1 && cameraRef.current) {
-                cameraRef.current.setCamera({ pitch: FOLLOW_PITCH, animationDuration: 0 })
+              if (
+                following &&
+                pitchNow < FOLLOW_PITCH - 1 &&
+                cameraRef.current
+              ) {
+                cameraRef.current.setCamera({
+                  pitch: FOLLOW_PITCH,
+                  animationDuration: 0,
+                })
               }
             }}
             onPress={() => setSelected(null)}
           >
             <MapboxGL.Camera
               ref={cameraRef}
-              defaultSettings={{ centerCoordinate: [0, 0], zoomLevel: 0, pitch: 0 }}
               followUserLocation={following}
-              followUserMode="course"
+              followUserMode={MapboxGL.UserTrackingMode.FollowWithCourse}
               followZoomLevel={FOLLOW_ZOOM}
               followPitch={FOLLOW_PITCH}
-              padding={{ top: 20, bottom: 120, left: 0, right: 0 }}
+              padding={{
+                paddingTop: 20,
+                paddingBottom: 120,
+                paddingLeft: 0,
+                paddingRight: 0,
+              }}
             />
 
             <MapboxGL.UserLocation
-              visible
-              puckBearingEnabled
-              puckBearing="heading"
-              onUpdate={(pos) => {
+              visible={true}
+              androidRenderMode='normal'
+              onUpdate={pos => {
                 const lat = pos.coords.latitude
                 const lon = pos.coords.longitude
                 setHere({ lat, lon })
@@ -125,7 +155,7 @@ export default function ExploreScreen() {
           )}
 
           {selected && (
-            <View style={styles.sheet} pointerEvents="box-none">
+            <View style={styles.sheet} pointerEvents='box-none'>
               <View style={styles.card}>
                 <Image
                   source={
@@ -134,7 +164,7 @@ export default function ExploreScreen() {
                       : require('@/assets/placeholder.jpg')
                   }
                   style={styles.hero}
-                  resizeMode="cover"
+                  resizeMode='cover'
                 />
                 <View style={styles.body}>
                   <View style={styles.row}>
@@ -155,7 +185,9 @@ export default function ExploreScreen() {
         // Permission pending/denied placeholder (keeps hooks order stable)
         <View style={styles.center}>
           <Text style={styles.centerText}>
-            {hasPerm === null ? 'Requesting location permission…' : 'Location permission denied'}
+            {hasPerm === null
+              ? 'Requesting location permission…'
+              : 'Location permission denied'}
           </Text>
         </View>
       )}
@@ -173,8 +205,19 @@ const styles = StyleSheet.create({
   hero: { height: 150, width: '100%', backgroundColor: '#222' },
 
   body: { paddingHorizontal: 16, paddingVertical: 14, backgroundColor: '#111' },
-  row: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 12 },
-  title: { color: '#fff', fontSize: 18, fontWeight: '800', flexShrink: 1, paddingRight: 8 },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+    flexShrink: 1,
+    paddingRight: 8,
+  },
   distance: { color: '#cbd5e1', fontSize: 14, fontWeight: '700' },
 
   fab: {
@@ -188,6 +231,12 @@ const styles = StyleSheet.create({
   },
   fabLabel: { color: '#fff', fontWeight: '600' },
 
-  goBtn: { backgroundColor: '#3b82f6', borderRadius: 14, alignItems: 'center', justifyContent: 'center', height: 48 },
+  goBtn: {
+    backgroundColor: '#3b82f6',
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 48,
+  },
   goLabel: { color: '#fff', fontWeight: '800', fontSize: 18 },
 })

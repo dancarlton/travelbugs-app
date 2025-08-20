@@ -1,5 +1,3 @@
-export type LngLat = [number, number]
-
 export type Poi = {
   id: string;
   name: string;
@@ -9,4 +7,15 @@ export type Poi = {
   city: string | null;
   neighborhood: string | null;
   image_url: string | null;
+}
+
+export type PoiPreview = {
+  id: string
+  name: string
+  lat: number
+  lng: number
+  imageUrl?: string
+  neighborhood?: string
+  category?: string
+  distanceMeters?: number
 }

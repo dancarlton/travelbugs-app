@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
-import QueryProvider from '../src/app-providers/QueryProvider';
-import SupabaseProvider from '../src/app-providers/SupabaseProvider';
-import ThemeProvider from '../src/app-providers/ThemeProvider';
+import QueryProvider from '../src/providers/QueryProvider';
+import SupabaseProvider from '../src/providers/SupabaseProvider';
+import ThemeProvider from '../src/providers/ThemeProvider';
 import MapboxGL from '@rnmapbox/maps';
 import Constants from 'expo-constants';
 
